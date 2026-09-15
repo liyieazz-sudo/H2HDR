@@ -1,21 +1,42 @@
-H2HDR/
-├── .github/
-│   └── workflows/
-│       └── build-apk.yml            <-- Actions 自动化脚本
-├── app/
-│   ├── build.gradle.kts             <-- App 模块配置
-│   └── src/
-│       └── main/
-│           ├── AndroidManifest.xml  <-- 清单文件
-│           └── java/
-│               └── com/
-│                   └── eazz/
-│                       └── h2hdr/
-│                           ├── MainActivity.kt
-│                           └── core/
-│                               └── HdrConverter.kt
-├── gradle/
-│   └── wrapper/
-│       └── gradle-wrapper.properties
-├── build.gradle.kts                 <-- 根目录构建配置
-└── settings.gradle.kts              <-- 模块设置
+plugins {
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
+}
+
+android {
+    namespace = "com.eazz.h2hdr"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.eazz.h2hdr"
+        minSdk = 34
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0.0"
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    buildFeatures {
+        compose = true
+    }
+}
+
+dependencies {
+    val composeBom = platform("androidx.compose:compose-bom:2024.09.00")
+    implementation(composeBom)
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material:material-icons-extended")
+    implementation("androidx.activity:activity-compose:1.9.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.5")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
+}
